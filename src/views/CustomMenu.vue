@@ -18,7 +18,7 @@
         :id="`content${index}`"
         :key="index"
       >
-        <div class="item-title">标题{{ index }}</div>
+        <div class="item-title">标题{{ index + 1 }}</div>
         <div class="item-box" v-for="(item, index) in 10" :key="index">
           产品{{ index }}{{ isMouseDown }}
         </div>
@@ -77,21 +77,18 @@ export default defineComponent ({
       // 执行您想要的操作
     };
 
-
-    window.addEventListener('touchstart', () => {
-      isMouseDown.value = true;
-    });
-
-    window.addEventListener('touchend', () => {
-      isMouseDown.value = false;
-    });
-
     // 初始化
     onMounted(() => {
       const element = document.querySelector(".menu-content");
 
       if (element) {
         element.addEventListener("scroll", handleScroll);
+        element.addEventListener("scrollend", () => {
+          isMouseDown.value = false;
+        });
+        element.addEventListener('touchstart', () => {
+          isMouseDown.value = true;
+        });
       }
     });
 
